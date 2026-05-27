@@ -3,6 +3,8 @@ import numpy as np
 import spacy
 import joblib
 import os
+import sys
+import subprocess
 
 # Set up browser page configurations (Only called ONCE at the very top)
 st.set_page_config(
@@ -29,12 +31,30 @@ st.set_page_config(
     
 #     return nlp, model, le
 
+# @st.cache_resource
+# def load_production_assets():
+#     """Loads the SpaCy backbone and pre-trained classification models safely."""
+#     # This will load instantly because requirements.txt handles installation on boot
+#     nlp = spacy.load("en_core_web_md")
+    
+#     # Load your trained scikit-learn models
+#     model = joblib.load('spam_classifier_model.pkl')
+#     le = joblib.load('label_encoder.pkl')
+    
+#     return nlp, model, le
+
+
 @st.cache_resource
 def load_production_assets():
-    """Loads the SpaCy backbone and pre-trained classification models safely."""
-    # This will load instantly because requirements.txt handles installation on boot
-    nlp = spacy.load("en_core_web_md")
-    
+    """Dynamically checks for and downloads SpaCy assets using the active environment Python."""
+    try:
+        nlp = spacy.load("en_core_web_md")
+    except OSError:
+        with st.spinner("Downloading language vectors (en_core_web_sm)... This happens once on startup."):
+            #Programmatically execute python -m spacy download en_core_web_sm inside the active venv
+            subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"], check=True)
+            nlp = spacy.load("en_core_web_sm")
+            
     # Load your trained scikit-learn models
     model = joblib.load('spam_classifier_model.pkl')
     le = joblib.load('label_encoder.pkl')
