@@ -12,14 +12,10 @@ st.set_page_config(
 
 @st.cache_resource
 def load_production_assets():
-    """Loads the SpaCy backbone and pre-trained classification models."""
-    # This will load instantly because requirements.txt handles the installation globally
+    # Will load flawlessly because setup.sh pre-installed it safely
     nlp = spacy.load("en_core_web_md")
-    
-    # Load your trained scikit-learn models
     model = joblib.load('spam_classifier_model.pkl')
     le = joblib.load('label_encoder.pkl')
-    
     return nlp, model, le
 
 
