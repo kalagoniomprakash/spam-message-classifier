@@ -2,5 +2,6 @@ pandas
 numpy
 scikit-learn
 spacy
-streamlit
 joblib
+streamlit
+https://github.com
