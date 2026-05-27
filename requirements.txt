@@ -1,6 +1,9 @@
 pandas
 numpy
 scikit-learn
-spacy==3.4.0 https://github.com/explosion/spacy-models/releases/download/de_core_news_md-3.4.0/de_core_news_md-3.4.0.tar.gz https://github.com/explosion/spacy-models/releases/download/de_core_news_lg-3.4.0/de_core_news_lg-3.4.0.tar.gz https://github.com/explosion/spacy-models/releases/download/de_dep_news_trf-3.4.0/de_dep_news_trf-3.4.0.tar.gz streamlit==1.23.1
 joblib
-streamlit
+streamlit==1.23.1
+spacy==3.4.0
+de_core_news_md @ https://github.com/explosion/spacy-models/releases/download/de_core_news_md-3.4.0/de_core_news_md-3.4.0.tar.gz
+de_core_news_lg @ https://github.com/explosion/spacy-models/releases/download/de_core_news_lg-3.4.0/de_core_news_lg-3.4.0.tar.gz
+de_dep_news_trf @ https://github.com/explosion/spacy-models/releases/download/de_dep_news_trf-3.4.0/de_dep_news_trf-3.4.0.tar.gz
