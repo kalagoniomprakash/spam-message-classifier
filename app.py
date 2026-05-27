@@ -2,6 +2,9 @@ import streamlit as st
 import numpy as np
 import spacy
 import joblib
+import os
+import sys
+import subprocess
 
 # Set up browser page configurations (Only called ONCE at the very top)
 st.set_page_config(
@@ -30,14 +33,14 @@ st.set_page_config(
 
 @st.cache_resource
 def load_production_assets():
-    """Dynamically checks for and downloads SpaCy assets using safe environment targets."""
+    """Dynamically checks for and downloads SpaCy assets using standard python flags."""
     try:
         # Try loading the model directly
         nlp = spacy.load("en_core_web_md")
     except OSError:
         with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
-            # Native safe downloader forced into user-permissive directories to bypass Errno 13
-            spacy.cli.download("en_core_web_md", pip_args=["--user"])
+            # Force pip to download the model into user storage space to bypass permission errors
+            subprocess.run([sys.executable, "-m", "pip", "install", "en_core_web_md", "--user"], check=True)
             nlp = spacy.load("en_core_web_md")
             
     # Load your trained scikit-learn models
