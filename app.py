@@ -61,11 +61,6 @@ except Exception as e:
     st.error(f"⚠️ **Deployment Error:** Unable to load model assets. Details: {e}")
     st.info("💡 **Fix:** Please ensure you have run `train.py` first and that `spam_classifier_model.pkl` and `label_encoder.pkl` exist in this directory.")
     assets_ready = False
-    except OSError:
-        # If not found, download it dynamically using standard system commands
-        with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
-            os.system("python -m spacy download en_core_web_md")
-            nlp = spacy.load("en_core_web_md")
 
 # Text Input Area
 user_input = st.text_area(
