@@ -10,16 +10,34 @@ st.set_page_config(
     layout="centered"
 )
 
+# @st.cache_resource
+# def load_production_assets():
+#     """Dynamically checks for and downloads SpaCy assets using the native CLI tool."""
+#     try:
+#         # Try loading the model directly
+#         nlp = spacy.load("en_core_web_md")
+#     except OSError:
+#         with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
+#             # Native safe downloader within the active virtual environment
+#             spacy.cli.download("en_core_web_md")
+#             nlp = spacy.load("en_core_web_md")
+            
+#     # Load your trained scikit-learn models
+#     model = joblib.load('spam_classifier_model.pkl')
+#     le = joblib.load('label_encoder.pkl')
+    
+#     return nlp, model, le
+
 @st.cache_resource
 def load_production_assets():
-    """Dynamically checks for and downloads SpaCy assets using the native CLI tool."""
+    """Dynamically checks for and downloads SpaCy assets using safe environment targets."""
     try:
         # Try loading the model directly
         nlp = spacy.load("en_core_web_md")
     except OSError:
         with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
-            # Native safe downloader within the active virtual environment
-            spacy.cli.download("en_core_web_md")
+            # Native safe downloader forced into user-permissive directories to bypass Errno 13
+            spacy.cli.download("en_core_web_md", pip_args=["--user"])
             nlp = spacy.load("en_core_web_md")
             
     # Load your trained scikit-learn models
@@ -27,6 +45,7 @@ def load_production_assets():
     le = joblib.load('label_encoder.pkl')
     
     return nlp, model, le
+
 
 
 # UI Styling and Layout
