@@ -2,6 +2,8 @@ import streamlit as st
 import numpy as np
 import spacy
 import joblib
+import os
+import subprocess
 
 # Set up browser page configurations (Only called ONCE at the very top)
 st.set_page_config(
@@ -12,10 +14,16 @@ st.set_page_config(
 
 @st.cache_resource
 def load_production_assets():
-    """Loads the SpaCy backbone and pre-trained classification models."""
-    # This will load instantly because requirements.txt handles the installation globally
-    nlp = spacy.load("en_core_web_md")
-    
+    """Dynamically checks for and downloads SpaCy assets using standard python flags."""
+    try:
+        # Try loading the model directly
+        nlp = spacy.load("en_core_web_md")
+    except OSError:
+        with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
+            # Force pip to download the model into user storage space to bypass permission errors
+            subprocess.run([sys.executable, "-m", "pip", "install", "en_core_web_md", "--user"], check=True)
+            nlp = spacy.load("en_core_web_md")
+            
     # Load your trained scikit-learn models
     model = joblib.load('spam_classifier_model.pkl')
     le = joblib.load('label_encoder.pkl')
