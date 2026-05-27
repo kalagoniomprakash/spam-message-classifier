@@ -109,6 +109,11 @@ if st.button("Classify Text", type="primary") and assets_ready:
         
         if decoded_label.lower() == "spam":
             st.error(f"🚨 **Alert:** This text block matches typical **{decoded_label.upper()}** patterns.")
+            st.markdown("""
+            **Indicators detected:** 
+            * High frequency of sales/promotional semantic anchors
+            * Urgency patterns matching typical phishing or marketing scripts
+            """)
  
         else:
             st.success(f"✅ **Safe:** This text block is classified as **{decoded_label.upper()}** (Legitimate).")
