@@ -13,34 +13,16 @@ st.set_page_config(
     layout="centered"
 )
 
-# @st.cache_resource
-# def load_production_assets():
-#     """Dynamically checks for and downloads SpaCy assets using the native CLI tool."""
-#     try:
-#         # Try loading the model directly
-#         nlp = spacy.load("en_core_web_md")
-#     except OSError:
-#         with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
-#             # Native safe downloader within the active virtual environment
-#             spacy.cli.download("en_core_web_md")
-#             nlp = spacy.load("en_core_web_md")
-            
-#     # Load your trained scikit-learn models
-#     model = joblib.load('spam_classifier_model.pkl')
-#     le = joblib.load('label_encoder.pkl')
-    
-#     return nlp, model, le
-
 @st.cache_resource
 def load_production_assets():
-    """Dynamically checks for and downloads SpaCy assets using standard python flags."""
+    """Dynamically checks for and downloads SpaCy assets using the native CLI tool."""
     try:
         # Try loading the model directly
         nlp = spacy.load("en_core_web_md")
     except OSError:
         with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
-            # Force pip to download the model into user storage space to bypass permission errors
-            subprocess.run([sys.executable, "-m", "pip", "install", "en_core_web_md", "--user"], check=True)
+            # Native safe downloader within the active virtual environment
+            spacy.cli.download("en_core_web_md")
             nlp = spacy.load("en_core_web_md")
             
     # Load your trained scikit-learn models
@@ -48,6 +30,24 @@ def load_production_assets():
     le = joblib.load('label_encoder.pkl')
     
     return nlp, model, le
+
+# @st.cache_resource
+# def load_production_assets():
+#     """Dynamically checks for and downloads SpaCy assets using standard python flags."""
+#     try:
+#         # Try loading the model directly
+#         nlp = spacy.load("en_core_web_md")
+#     except OSError:
+#         with st.spinner("Downloading language vectors (en_core_web_md)... This happens once on startup."):
+#             # Force pip to download the model into user storage space to bypass permission errors
+#             subprocess.run([sys.executable, "-m", "pip", "install", "en_core_web_md", "--user"], check=True)
+#             nlp = spacy.load("en_core_web_md")
+            
+#     # Load your trained scikit-learn models
+#     model = joblib.load('spam_classifier_model.pkl')
+#     le = joblib.load('label_encoder.pkl')
+    
+#     return nlp, model, le
 
 
 
