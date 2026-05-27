@@ -43,3 +43,7 @@ An end-to-end Machine Learning pipeline that uses **SpaCy word embeddings** and 
 ## Model Evaluation Results
 * **Overall Accuracy**: ~95.16%
 
+<img width="701" height="429" alt="image" src="https://github.com/user-attachments/assets/9e3e3ac2-5f1f-4eea-8168-5434ffb15d3c" />
+
+
+
