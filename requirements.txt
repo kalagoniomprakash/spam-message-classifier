@@ -4,4 +4,3 @@ scikit-learn
 spacy
 joblib
 streamlit
-en_core_web_md @ https://github.com
