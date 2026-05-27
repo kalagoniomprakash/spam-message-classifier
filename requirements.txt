@@ -4,5 +4,3 @@ scikit-learn
 spacy
 joblib
 streamlit
---extra-index-url https://github.io
-en_core_web_md
