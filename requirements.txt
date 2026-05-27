@@ -5,4 +5,4 @@ spacy
 joblib
 streamlit
 --extra-index-url https://github.io
-en_core_web_md==3.8.0
+en_core_web_md
